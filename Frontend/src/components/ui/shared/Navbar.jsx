@@ -10,7 +10,7 @@ import { LogOut, User2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  //user
+  //USER
   const user = false;
   return (
     <div className="bg-white">
