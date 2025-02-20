@@ -47,7 +47,7 @@ app.listen(PORT, () => {
 
 // app.post('/api/users', async (req, res) => {
 //   try {
-//     const { name, email, age } = req.body;
+//     const { name, email, age } = req.body;`
 
 //     // Create a new user
 //     const newUser = new User({

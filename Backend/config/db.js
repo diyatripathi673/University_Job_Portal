@@ -21,14 +21,15 @@
 
 
 // db.js
+
 import mongoose from 'mongoose';
 
  const connectDB = async () => {
   // const uri ="mongodb+srv://mahibisht2610:iM97SzVLpy4onuTC@mahima26.5y6po.mongodb.net/?retryWrites=true&w=majority&appName=Mahima26";
 // const uri = "mongodb+srv://tripathidiya673:tripathidiya673@cluster0.gumlx.mongodb.net/jobPortal?retryWrites=true&w=majority";
-const uri = "mongodb+srv://tripathidiya673:Ywi1nmlzEW2QrHg8@cluster0.gumlx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// const uri = "mongodb+srv://tripathidiya673:Ywi1nmlzEW2QrHg8@cluster0.gumlx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-
+const uri= "mongodb+srv://tripathidiya673:Ywi1nmlzEW2QrHg8@cluster0.gumlx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 
   try {
