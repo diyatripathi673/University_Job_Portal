@@ -18,7 +18,7 @@ const Navbar = () => {
         <div>
           <h1 className="text-2xl font-bold">
             Job
-            <span className="text-[#f83002]">Portal</span>
+            <span className="text-[#8B4513]">Portal</span>
           </h1>
         </div>
         <div className="flex items-center gap-12">
@@ -35,7 +35,7 @@ const Navbar = () => {
               </Link>
               <Link to='/signup'>
 
-                <Button className="bg-[#6A38C2]  hover:bg-[#49297d]">
+                <Button className="bg-[#8B4513]  hover:bg-[#4f280d]">
                   Signup
                 </Button>
               </Link>

@@ -3,7 +3,7 @@ import Navbar from "./components/shared/Navbar"
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/auth/Home";
+import Home from "./components/Home";
 
 const appRouter =createBrowserRouter([
   {
