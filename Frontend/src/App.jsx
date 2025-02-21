@@ -1,9 +1,9 @@
 import React from "react";
-import Navbar from "./components/ui/shared/Navbar";
-import Signup from "./components/ui/auth/Signup";
-import Login from "./components/ui/auth/Login";
+import Navbar from "./components/shared/Navbar"
+import Signup from "./components/auth/Signup";
+import Login from "./components/auth/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/ui/auth/Home";
+import Home from "./components/auth/Home";
 
 const appRouter =createBrowserRouter([
   {

@@ -3,13 +3,13 @@ import Navbar from "../shared/Navbar";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { RadioGroup } from "@radix-ui/react-radio-group";
-import { Button } from "../button";
+import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../../../redux/authSlice";
+import { setLoading } from "../../redux/authSlice";
 
 
 const USER_API_END_POINT = "http://localhost:4000/api/v1/user"; // Update your endpoint
