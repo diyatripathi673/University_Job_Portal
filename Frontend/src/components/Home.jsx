@@ -3,7 +3,7 @@ import Navbar from "./shared/Navbar"
 import Herosection from "./Herosection"
 import CategoryCarousel from "./CategoryCarousel"
 import LatestJob from "./LatestJob"
-import Footer from "./Footer"
+import Footer from "./shared/Footer"
 
 export default function Home() {
   return (
