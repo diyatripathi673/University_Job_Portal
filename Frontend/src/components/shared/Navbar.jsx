@@ -14,7 +14,7 @@ const Navbar = () => {
   const user = false;
   return (
     <div className="bg-white">
-      <div className="flex items-center justify-between mx-10 max-w-7xl h-16">
+      <div className="flex items-center justify-between  max-w-7xl h-16">
         <div>
           <h1 className="text-2xl font-bold">
           Amrapali

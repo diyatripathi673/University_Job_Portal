@@ -4,6 +4,7 @@ import Herosection from "./Herosection"
 import CategoryCarousel from "./CategoryCarousel"
 import LatestJob from "./LatestJob"
 import Footer from "./shared/Footer"
+import FilterCard from "./FilterCard"
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
     <CategoryCarousel/>
     <LatestJob/>
     <Footer/>
+    <FilterCard/>
     </div>
   )
 }
