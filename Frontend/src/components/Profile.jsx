@@ -12,7 +12,7 @@ const Skills = ["HTML", "CSS", " JAVASCRIPT", "REACTJS"];
 const isResume = true;
 
 const Profile = () => {
-  const [open, setopen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <div>
@@ -22,7 +22,7 @@ const Profile = () => {
           <div className="flex items-center gap-4">
             <Avatar className="h-24 w-24">
               <AvatarImage
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR6DqxRZOLkSeMjZ3whrde2iB8uhwkD989zg&s" // Add the image URL of the avatar
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR6DqxRZOLkSeMjZ3whrde2iB8uhwkD989zg&s"
                 alt="@shadcn"
               />
             </Avatar>
@@ -34,7 +34,7 @@ const Profile = () => {
               </p>
             </div>
           </div>
-          <Button onClick={()=>setopen(true)} className="text-right" variant="outline">
+          <Button onClick={() => setOpen(true)} className="text-right" variant="outline">
             <Pen />
           </Button>
         </div>
@@ -52,7 +52,7 @@ const Profile = () => {
         <div className="my-5">
           <h1>Skills</h1>
           <div className="flex items-center gap-1">
-            {Skills.length != 0 ? (
+            {Skills.length !== 0 ? (
               Skills.map((item, index) => <Badge key={index}>{item}</Badge>)
             ) : (
               <span>NA</span>
@@ -63,9 +63,9 @@ const Profile = () => {
           <Label className="text-md font-bold">Resume</Label>
           {isResume ? (
             <a
-              target="blank"
+              target="_blank"
               href="https://fake"
-              className="text-blue-500  w-full hover:underline cursor-pointer"
+              className="text-blue-500 w-full hover:underline cursor-pointer"
             >
               Diya Tripathi
             </a>
@@ -76,10 +76,10 @@ const Profile = () => {
       </div>
       <div className="max-w-4xl mx-auto bg-white rounded-2xl ">
         <h1 className="font-bold text-lg my-5">Applied Jobs</h1>
-        {/* application table */}
         <AppliedJobTable />
       </div>
-      <UpdateProfileDialog open={open} setopen={setopen} />
+
+      <UpdateProfileDialog open={open} setOpen={setOpen} />
     </div>
   );
 };
