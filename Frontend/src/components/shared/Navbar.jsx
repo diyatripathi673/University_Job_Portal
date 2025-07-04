@@ -7,39 +7,62 @@ import {
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { LogOut, User2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-
-
+import axios from "axios";
+import { USER_API_END_POINT } from "../utils/constants";
+// import {USER_API_END_POINT} from "../components/utils/constants"
 
 const Navbar = () => {
   //USER
 
-  const {user}=useSelector(store=>store.auth)
+  const { user } = useSelector((store) => store.auth);
+const dispath=useNavigate();
+const navigate=useNavigate();
+
+  const logOutHandler = async () => {
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+       
+      });
+      if(res.data.sucess){
+          dispath(setUser(null));
+          navigate("/");
+          toast.sucess(res.data.message)
+      }
+    } catch (err) {
+      console.log(err);
+      toast.err(err.response.data.message);
+    }
+  };
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between  max-w-7xl h-16">
         <div>
           <h1 className="text-2xl font-bold">
-          Amrapali
+            Amrapali
             <span className="text-[#8B4513]">JobConnect</span>
           </h1>
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
-            <li><Link to="/"> Home</Link></li>
-            <li><Link to="/jobs">Jobs </Link></li>
-            <li><Link to="/browse">Browser </Link> </li>
+            <li>
+              <Link to="/"> Home</Link>
+            </li>
+            <li>
+              <Link to="/jobs">Jobs </Link>
+            </li>
+            <li>
+              <Link to="/browse">Browser </Link>{" "}
+            </li>
           </ul>
           {!user ? (
             <div className="flex items-center gap-3">
-              <Link to='/login'>
-
+              <Link to="/login">
                 <Button variant="outline">Login</Button>
               </Link>
-              <Link to='/signup'>
-
+              <Link to="/signup">
                 <Button className="bg-[#8B4513]  hover:bg-[#4f280d]">
                   Signup
                 </Button>
@@ -78,14 +101,16 @@ const Navbar = () => {
                 <div className="flex flex-col  text-gray-600 ">
                   <div className="flex w-fit items-center gap-2 cursor-pointer">
                     <User2 />
-                    <Button variant="link"> 
-                    <Link to="/profile">View Profile</Link>
+                    <Button variant="link">
+                      <Link to="/profile">View Profile</Link>
                     </Button>
                   </div>
 
                   <div className="flex w-fit items-center gap-2 cursor-pointer">
                     <LogOut />
-                    <Button variant="link">Log Out</Button>
+                    <Button onClick={logOutHandler} variant="link">
+                      Log Out
+                    </Button>
                   </div>
                 </div>
               </PopoverContent>
@@ -98,6 +123,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-

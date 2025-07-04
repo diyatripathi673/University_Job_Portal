@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import {USER_API_END_POINT} from "../components/utils/constants"
+import axios from 'axios';
 import {
   Dialog,
   DialogContent,
@@ -10,7 +12,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
@@ -24,6 +26,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     skills: user?.profile?.skills?.map((skills) => skills),
     file: user?.profile?.resume,
   });
+  const dispatch= useDispatch();
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -44,15 +47,31 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     formData.append("file" , input.file)
   }
   try {
-    const res= await axios.post( )
+    setLoading(true);
+    const res= await axios.post( `${USER_API_END_POINT}/profile/ipdate`,formData,{
+      headers:{
+        'Content-Type' : 'multipart/form-data'
+      },
+      withCredentials:true
+    });
+    if(res.data.sucess){
+      dispatch(setUser(res.data.user));
+      toast.sucess(res.data.messsage)
+    }
   } catch (error) {
-    console.log(error)
+    console.log(error);
+    toast.error(error.response.data.messsage);
+  } finally{
+    setLoading(false);
   }
+  setOpen(false)
     console.log(input);
   };
+  
 
   return (
     <div>
+    
       <Dialog open={open}>
         <DialogContent
           className="sm:max-w-[425px]"
@@ -132,6 +151,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   onChange={changeEventHandler}
                   name="skills"
                 />
+               
               </div>
 
               <div className="grid grid-cols-4 items-center gap-4">
@@ -144,8 +164,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   className="col-span-3"
                   name="file"
                   accept="application/pdf"
+                  // value={input.file}
                   type="file"
                   onChange={fileChangeHandler}
+                
                 />
               </div>
             </div>
@@ -153,7 +175,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
               {loading ? (
                 <Button className="w-full my-4">
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Loading...
+                  Please wait..
                 </Button>
               ) : (
                 <Button type="submit" className="w-full my-4">

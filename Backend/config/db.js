@@ -32,6 +32,7 @@ import mongoose from 'mongoose';
 const uri= "mongodb+srv://tripathidiya673:Ywi1nmlzEW2QrHg8@cluster0.gumlx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 
+
   try {
     await mongoose.connect(uri);
     console.log('Connected to the database');

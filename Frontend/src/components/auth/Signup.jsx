@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+// import constants from "@/utils"
+import { USER_API_END_POINT } from "../utils/constants";
 import Navbar from "../shared/Navbar";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -11,8 +13,7 @@ import { Loader2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../../redux/authSlice";
 
-
-const USER_API_END_POINT = "http://localhost:4000/api/v1/user"; // Update your endpoint
+// const USER_API_END_POINT = "http://localhost:4000/api/v1/user"; // Update your endpoint
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -23,12 +24,12 @@ const Signup = () => {
     role: "",
     file: "",
   });
-  
+  const navigate = useNavigate();
+
   const { loading } = useSelector((state) => state.auth);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
   const [error, setError] = useState(""); // State to store error messages
-  const navigate = useNavigate();
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -43,7 +44,13 @@ const Signup = () => {
     // Reset error before validation
     setError("");
 
-    if (!input.fullname || !input.email || !input.phoneNumber || !input.password || !input.role) {
+    if (
+      !input.fullname ||
+      !input.email ||
+      !input.phoneNumber ||
+      !input.password ||
+      !input.role
+    ) {
       setError("Please fill in all the fields.");
       return false;
     }
@@ -73,15 +80,7 @@ const Signup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault(); // Fixed typo here (perventDefault -> preventDefault)
-    console.log(input);
-
-    // Validate form before proceeding
-    if (!validateForm()) {
-      return;
-    }
-
-    // Prepare form data if file is included, otherwise just JSON
-    const formData = new FormData();
+    const formData = new FormData(); //abc
     formData.append("fullname", input.fullname);
     formData.append("email", input.email);
     formData.append("phoneNumber", input.phoneNumber);
@@ -90,12 +89,11 @@ const Signup = () => {
     if (input.file) {
       formData.append("file", input.file);
     }
-
     try {
       console.log(input);
       dispatch(setLoading(true));
       // Sending the form data to the backend (adjust as necessary)
-      const res = await axios.post(`${USER_API_END_POINT}/register`, input );
+      const res = await axios.post(`${USER_API_END_POINT}/register`, input);
 
       if (res.data.success) {
         navigate("/login");
@@ -104,21 +102,30 @@ const Signup = () => {
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || "Something went wrong!");
+    } finally {
+      dispatch(setLoading(false));
     }
-    finally{
-      dispatch(setLoading(false))
+
+    // Validate form before proceeding
+    if (!validateForm()) {
+      return;
     }
+
+    
+   
   };
 
   return (
     <div>
       <Navbar />
       <div className="flex items-center justify-center max-w-7xl mx-auto">
-        <form onSubmit={submitHandler} className="w-1/2 border border-gray-200 rounded-md p-4 my-10">
+        <form
+          onSubmit={submitHandler}
+          className="w-1/2 border border-gray-200 rounded-md p-4 my-10"
+        >
           <h1 className="font-bold text-xl mb-5">Sign Up</h1>
-
-          {error && <div className="text-red-500 mb-4">{error}</div>} {/* Display error message */}
-
+          {error && <div className="text-red-500 mb-4">{error}</div>}{" "}
+          {/* Display error message */}
           <div className="my-2">
             <Label>Full Name</Label>
             <Input
@@ -159,7 +166,6 @@ const Signup = () => {
               placeholder=""
             />
           </div>
-
           <div className="flex items-center justify-between">
             <RadioGroup className="flex items-center gap-4 my-5">
               <div className="flex items-center space-x-2">
@@ -195,7 +201,6 @@ const Signup = () => {
               />
             </div>
           </div>
-
           {loading ? (
             <Button className="w-full my-4">
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -220,10 +225,6 @@ const Signup = () => {
 
 export default Signup;
 
-
-
-
-
 // // import React, { useState } from "react";
 // // import Navbar from "../shared/Navbar";
 // // import { Label } from "@/components/ui/label";
@@ -242,15 +243,15 @@ export default Signup;
 // //       password:"",
 // //       role:"",
 // //       file:"",
-  
+
 // //     });
 
 // //     const navigate = useNavigate();
-  
+
 // //     const changeEventHandler = (e) => {
 // //       setInput({...input, [e.target.name]:e.target.value});
-  
-// //     }  
+
+// //     }
 // //     const changeFileHandler = (e) =>{
 // //       setInput({...input, file:e.target.files?.[0]});
 // //     }
@@ -301,7 +302,7 @@ export default Signup;
 // //           </div>
 // //           <div className=" my-2">
 // //             <Label>Email</Label>
-// //             <Input 
+// //             <Input
 // //             type="email"
 // //             value={input.email}
 // //             name="email"
@@ -310,7 +311,7 @@ export default Signup;
 // //           </div>
 // //           <div className=" my-2">
 // //             <Label>Phone Number</Label>
-// //             <Input type="text" 
+// //             <Input type="text"
 // //             value={input.phoneNumber}
 // //             name="phoneNumber"
 // //             onChange={changeEventHandler}
@@ -326,11 +327,11 @@ export default Signup;
 // //           </div>
 
 // //           <div className="flex items-center justify-between">
-          
+
 // //           <RadioGroup className="flex items-center gap-4 my-5" >
 // //       <div className="flex items-center space-x-2">
 // //         <Input
-// //          type="radio" 
+// //          type="radio"
 // //          name="role"
 // //          value="student"
 // //          checked={input.role == 'student'}
@@ -341,7 +342,7 @@ export default Signup;
 // //       </div>
 // //       <div className="flex items-center space-x-2">
 // //       <Input
-// //          type="radio" 
+// //          type="radio"
 // //          name="role"
 // //          value="recruiter"
 // //          checked={input.role == 'recruiter'}
@@ -350,11 +351,11 @@ export default Signup;
 // //          />
 // //         <Label htmlFor="recruiter">Recruiter</Label>
 // //       </div>
-      
+
 // //     </RadioGroup>
 // //     <div className="flex items-center gap-2">
 // //       <label >Profile</label>
-// //       <Input 
+// //       <Input
 // //       accept="image/*"
 // //       type="file"
 // //       onChange={changeFileHandler}
@@ -373,7 +374,6 @@ export default Signup;
 // // };
 
 // // export default Signup;
-
 
 // import React, { useState } from "react";
 // import Navbar from "../shared/Navbar";
@@ -472,10 +472,10 @@ export default Signup;
 // // <<<<<<< recover
 // //       const res = await axios.post(`${USER_API_END_POINT}/register`, input);
 // //  console.log(res);
- 
+
 // // =======
 //       console.log(formdata);
-      
+
 //       // const res = await axios.post(`${USER_API_END_POINT}/register`, formdata, {
 //       //   headers: {
 //       //     "Content-Type": "multipart/form-data",
@@ -485,8 +485,7 @@ export default Signup;
 
 //       const  res = await axios.post('http://localhost:4000/api/v1/user/register',formdata)
 //   console.log(res);
-  
- 
+
 //       if (res.data.success) {
 //         navigate("/login");
 //         toast.success(res.data.message);
@@ -599,4 +598,3 @@ export default Signup;
 // };
 
 // export default Signup;
-

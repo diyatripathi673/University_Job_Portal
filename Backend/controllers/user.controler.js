@@ -129,7 +129,7 @@ export const logout = async (req, res) => {
       sameSite: "strict",
     })
     .json({
-      message: `Welcome back ${user.fullname}`,
+      message: `Welcome back ${User.fullname}`,
       user,
       success: true,
     });
@@ -146,6 +146,7 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, password, bio, skills } = req.body;
+    console.log(fullname,email,phoneNumber,bio,skills)
     const file = req.file; // Assuming you're uploading a file (e.g., profile picture)
      const fileUri = getDataUri(file);  
      const cloudResponse= await cloudinary.uploader.upload(fileUri.content)
