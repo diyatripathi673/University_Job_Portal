@@ -1,20 +1,16 @@
-import React, { useState } from "react";
-import axios from "axios";
-import {USER_API_END_POINT} from "../utils/constants"
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { RadioGroup } from "@radix-ui/react-radio-group";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { RadioGroup } from "../ui/radio-group";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoading, setUser } from "../../redux/authSlice";
-
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { USER_API_END_POINT } from "../utils/constants.js";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading, setUser } from "@/redux/authSlice";
 import { Loader2 } from "lucide-react";
-
-// const USER_API_END_POINT = "http://localhost:8000/api/v1/user";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -22,15 +18,13 @@ const Login = () => {
     password: "",
     role: "",
   });
+  const { loading, user } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-
-  // Destructuring loading from the state, ensuring the correct spelling ('loading')
-  const { loading } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -43,23 +37,22 @@ const Login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-        dispatch(setUser (res.data.user))
+        dispatch(setUser(res.data.user));
         navigate("/");
         toast.success(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      // Safe error handling
-      if (error.response && error.response.data && error.response.data.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("An error occurred. Please try again.");
-      }
+      toast.error(error.response.data.message);
     } finally {
       dispatch(setLoading(false));
     }
   };
-
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
   return (
     <div>
       <Navbar />
@@ -69,7 +62,6 @@ const Login = () => {
           className="w-1/2 border border-gray-200 rounded-md p-4 my-10"
         >
           <h1 className="font-bold text-xl mb-5">Login</h1>
-
           <div className="my-2">
             <Label>Email</Label>
             <Input
@@ -77,7 +69,7 @@ const Login = () => {
               value={input.email}
               name="email"
               onChange={changeEventHandler}
-              placeholder="Diya@gmail.com"
+              placeholder="patel@gmail.com"
             />
           </div>
 
@@ -88,10 +80,9 @@ const Login = () => {
               value={input.password}
               name="password"
               onChange={changeEventHandler}
-              placeholder=""
+              placeholder="patel@gmail.com"
             />
           </div>
-
           <div className="flex items-center justify-between">
             <RadioGroup className="flex items-center gap-4 my-5">
               <div className="flex items-center space-x-2">
@@ -103,7 +94,7 @@ const Login = () => {
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
-                <Label htmlFor="student">Student</Label>
+                <Label htmlFor="r1">Student</Label>
               </div>
               <div className="flex items-center space-x-2">
                 <Input
@@ -114,23 +105,21 @@ const Login = () => {
                   onChange={changeEventHandler}
                   className="cursor-pointer"
                 />
-                <Label htmlFor="recruiter">Recruiter</Label>
+                <Label htmlFor="r2">Recruiter</Label>
               </div>
             </RadioGroup>
           </div>
-
           {loading ? (
             <Button className="w-full my-4">
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Loading...
+              {" "}
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait{" "}
             </Button>
           ) : (
             <Button type="submit" className="w-full my-4">
               Login
             </Button>
           )}
-
-          <span>
+          <span className="text-sm">
             Don't have an account?{" "}
             <Link to="/signup" className="text-blue-600">
               Signup
